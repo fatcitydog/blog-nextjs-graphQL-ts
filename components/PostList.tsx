@@ -1,8 +1,9 @@
-import { useQuery, gql, NetworkStatus } from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
 import { useEffect, useState } from "react";
 
 import Post from "./Post";
 import { MoreBox } from "../styles/globalStyles";
+import AddPost from "./AddPost";
 import { createGlobalStyle } from "styled-components";
 
 const POST_QUERY = gql`
@@ -92,6 +93,7 @@ export default function PostList() {
   //It should be the post.id for the key but since the IDs are repeated in the data so I use index instead.
   return (
     <>
+      <AddPost />
       <div>
         {posts &&
           posts.map((post: any, index) => <Post key={index} post={post} />)}
