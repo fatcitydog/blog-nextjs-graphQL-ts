@@ -2,6 +2,7 @@ import { useQuery, gql } from "@apollo/client";
 import { useEffect, useState } from "react";
 
 import Post from "./Post";
+import { useFetchURL } from "./Hooks/useFetchURL";
 import { MoreBox } from "../styles/globalStyles";
 
 const POST_QUERY = gql`
@@ -54,6 +55,10 @@ export default function PostList() {
   } = useQuery(RETRIEVEPAGE_QUERY, {
     variables: { page: pageNumber },
   });
+
+  const a = useFetchURL(
+    "https://conversion-rate-experts.com/genchi-genbutsu-stories/"
+  );
 
   const handleScroll = (e: any) => {
     const scrollHeight = e.target.documentElement.scrollHeight;
