@@ -1,9 +1,9 @@
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, NetworkStatus } from "@apollo/client";
 import { useEffect, useState } from "react";
 
 import Post from "./Post";
-import { useFetchURL } from "./Hooks/useFetchURL";
 import { MoreBox } from "../styles/globalStyles";
+import { createGlobalStyle } from "styled-components";
 
 const POST_QUERY = gql`
   query {
@@ -39,7 +39,7 @@ const RETRIEVEPAGE_QUERY = gql`
 
 export default function PostList() {
   const [posts, setPosts] = useState<any[]>([]);
-  const [pageNumber, setPageNumber] = useState<number>(0);
+  const [pageNumber, setPageNumber] = useState(1);
   const {
     data: firstPage,
     error: firstPageError,
@@ -54,24 +54,25 @@ export default function PostList() {
     variables: { page: pageNumber },
   });
 
-  // const handlePreview = () => {
-  //   const link = posts.map((post) => {
-  //     const imageURL = useFetchURL(post.url);
-  //   });
-  // };
-
-  const handleScroll = (e: any) => {
+  const handleScroll = async (e: any) => {
     const scrollHeight = e.target.documentElement.scrollHeight;
     const currentHeight = Math.ceil(
       e.target.documentElement.scrollTop + window.innerHeight
     );
     if (currentHeight + 1 >= scrollHeight) {
-      setPageNumber((prev) => prev++);
-      refetch({ page: pageNumber });
-      if (!retrievePageLoading) {
-        setPosts((prev) => [...prev, ...retrievePage.retrievePageArticles]);
-      }
-      console.log(retrievePageLoading);
+      console.log("ttt");
+      await handleFetchData();
+    }
+  };
+
+  const handleFetchData = async () => {
+    setPageNumber((prePageNumber) => prePageNumber + 1);
+    await refetch({ page: pageNumber });
+
+    if (!retrievePageLoading) {
+      setPosts((prev) => [...prev, ...retrievePage.retrievePageArticles]);
+    } else {
+      setPageNumber((prePageNumber) => prePageNumber - 1);
     }
   };
 
@@ -83,23 +84,20 @@ export default function PostList() {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-  }, []);
-
-  // useEffect(() => {
-  //   if (posts) {
-  //     handlePreview();
-  //   }
-  // }, [posts]);
+  }, [pageNumber]);
 
   if (firstPageLoading) return <div>Loading...</div>;
-  if (firstPageError) return <div>{`Error! ${firstPageError.message}`}</div>;
+  if (firstPageError || retrievePageError) return <div>Error!</div>;
 
+  //It should be the post.id for the key but since the IDs are repeated in the data so I use index instead.
   return (
-    <div>
-      {posts && posts.map((post: any) => <Post key={post.id} post={post} />)}
-      <MoreBox>MORE...</MoreBox>
-      {retrievePageLoading && <div>loading...</div>}
-      {retrievePageError && <div>{`Error! ${retrievePageError.message}`}</div>}
-    </div>
+    <>
+      <div>
+        {posts &&
+          posts.map((post: any, index) => <Post key={index} post={post} />)}
+      </div>
+      {retrievePageLoading && <div>Loading...</div>}
+      <MoreBox>More...</MoreBox>
+    </>
   );
 }

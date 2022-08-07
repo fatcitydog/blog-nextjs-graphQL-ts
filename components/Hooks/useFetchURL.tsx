@@ -21,9 +21,10 @@ export const useFetchURL = (link: string) => {
   const getData = (data: string) => {
     const regexp = new RegExp("<meta.*?(|</meta)>", "g");
     let imageLink = "";
-    if (data) {
-      const metaTagsList = data.match(regexp);
-      metaTagsList!.map((tag: string) => {
+    const metaTagsList = data.match(regexp);
+
+    if (metaTagsList?.length) {
+      metaTagsList.map((tag: string) => {
         const nameRegexp = new RegExp(
           '((?<=name=")|(?<=property=")).*?(?=")',
           "g"

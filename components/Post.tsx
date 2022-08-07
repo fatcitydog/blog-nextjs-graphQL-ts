@@ -19,6 +19,7 @@ const Box = styled.div`
 
 const Image = styled.img`
   width: 100%;
+  
   max-width: 30rem;
   border-radius: 3px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -46,12 +47,11 @@ const PostInfo = styled(Text)`
 `;
 
 export default function Post({ post }: any) {
-  
   const imageURL = useFetchURL(post.url);
 
   return (
     <Box>
-      <Image src={imageURL} />
+      <Image src={imageURL ? imageURL : "/error.png"} />
       <TextBox>
         <Header>{post.title}</Header>
         <RowBox>
