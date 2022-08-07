@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import { timeDifferenceForDate } from "../utils/timeDifference";
 import { Header, ColFlexBox, Text } from "../styles/globalStyles";
+import { useFetchURL } from "./Hooks/useFetchURL";
 
 const Box = styled.div`
   padding: 1rem;
@@ -45,9 +46,12 @@ const PostInfo = styled(Text)`
 `;
 
 export default function Post({ post }: any) {
+  
+  const imageURL = useFetchURL(post.url);
+
   return (
     <Box>
-      <Image src="https://i.guim.co.uk/img/media/fe1e34da640c5c56ed16f76ce6f994fa9343d09d/0_174_3408_2046/master/3408.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=0d3f33fb6aa6e0154b7713a00454c83d" />
+      <Image src={imageURL} />
       <TextBox>
         <Header>{post.title}</Header>
         <RowBox>

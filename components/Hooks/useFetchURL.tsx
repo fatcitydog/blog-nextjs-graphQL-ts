@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export const useFetchURL = (link: string) => {
-  const [imageURL, setImageURL] = useState();
+  const [imageURL, setImageURL] = useState<string | null>();
   const [data, setData] = useState("");
 
   const fetchData = async (url: any) => {
@@ -19,36 +19,29 @@ export const useFetchURL = (link: string) => {
   };
 
   const getData = (data: string) => {
-    console.log(data);
     const regexp = new RegExp("<meta.*?(|</meta)>", "g");
-    let metaTagsContent = {};
-    let metaTagsList = [];
+    let imageLink = "";
     if (data) {
-      metaTagsList = data.match(regexp);
-      metaTagsList.map((tag: any) => {
-        let nameRegexp = new RegExp(
+      const metaTagsList = data.match(regexp);
+      metaTagsList!.map((tag: string) => {
+        const nameRegexp = new RegExp(
           '((?<=name=")|(?<=property=")).*?(?=")',
           "g"
         );
-        let contentRegexp = new RegExp('(?<=content=").*?(?=")', "g");
-        let contentRegexp1 = new RegExp("<meta*?>(.*?)</meta>", "g");
-        let name = tag.match(nameRegexp);
-        let content = tag.match(contentRegexp);
-        content = content || tag.match(contentRegexp1);
-        if (name && content) {
-          metaTagsContent = {
-            ...metaTagsContent,
-            [`${name[0]}`]: `${content[0]}`,
-          };
+        const contentRegexp = new RegExp('(?<=content=").*?(?=")', "g");
+        const name = tag.match(nameRegexp);
+        const content = tag.match(contentRegexp);
+
+        if (name && content && name![0] === "og:image") {
+          return (imageLink = content![0]);
         }
       });
-    }
-    console.log(metaTagsContent["og:image"]);
-    setImageURL("s");
+      setImageURL(imageLink);
+    } else setImageURL("error");
   };
 
   useEffect(() => {
-    fetchData("https://conversion-rate-experts.com/genchi-genbutsu-stories/");
+    fetchData(link);
   }, [URL]);
 
   return imageURL;

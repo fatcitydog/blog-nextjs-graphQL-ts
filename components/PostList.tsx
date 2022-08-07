@@ -38,10 +38,8 @@ const RETRIEVEPAGE_QUERY = gql`
 `;
 
 export default function PostList() {
-  const [posts, setPosts] = useState([]);
-
+  const [posts, setPosts] = useState<any[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
-
   const {
     data: firstPage,
     error: firstPageError,
@@ -56,9 +54,11 @@ export default function PostList() {
     variables: { page: pageNumber },
   });
 
-  const a = useFetchURL(
-    "https://conversion-rate-experts.com/genchi-genbutsu-stories/"
-  );
+  // const handlePreview = () => {
+  //   const link = posts.map((post) => {
+  //     const imageURL = useFetchURL(post.url);
+  //   });
+  // };
 
   const handleScroll = (e: any) => {
     const scrollHeight = e.target.documentElement.scrollHeight;
@@ -84,6 +84,12 @@ export default function PostList() {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
   }, []);
+
+  // useEffect(() => {
+  //   if (posts) {
+  //     handlePreview();
+  //   }
+  // }, [posts]);
 
   if (firstPageLoading) return <div>Loading...</div>;
   if (firstPageError) return <div>{`Error! ${firstPageError.message}`}</div>;
