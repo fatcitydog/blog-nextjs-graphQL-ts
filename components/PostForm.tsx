@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
-import { OwnPostType, handleFunction } from "./Interface";
+import { handleFunction } from "./Interface";
 
 const Form = styled.form`
   display: flex;

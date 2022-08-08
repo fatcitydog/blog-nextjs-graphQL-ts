@@ -56,9 +56,7 @@ export default function PostList() {
     variables: { page: pageNumber },
   });
 
-  const handleScroll = async (e: {
-    target: { documentElement: { scrollHeight: number; scrollTop: number } };
-  }) => {
+  const handleScroll = async (e: any) => {
     const scrollHeight = e.target.documentElement.scrollHeight;
     const currentHeight = Math.ceil(
       e.target.documentElement.scrollTop + window.innerHeight
