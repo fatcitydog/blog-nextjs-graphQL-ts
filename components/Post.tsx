@@ -19,7 +19,7 @@ const Box = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  
+
   max-width: 30rem;
   border-radius: 3px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;

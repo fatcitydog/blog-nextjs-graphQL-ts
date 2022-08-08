@@ -3,9 +3,8 @@ import axios from "axios";
 
 export const useFetchURL = (link: string) => {
   const [imageURL, setImageURL] = useState<string | null>();
-  const [data, setData] = useState("");
 
-  const fetchData = async (url: any) => {
+  const fetchData = async (url: string) => {
     const {
       data: { response, err },
     } = await axios.post("/api/metacardvalidator", {
@@ -14,7 +13,7 @@ export const useFetchURL = (link: string) => {
     if (response) {
       getData(response);
     } else {
-      setData(err);
+      console.log(err);
     }
   };
 
@@ -43,7 +42,7 @@ export const useFetchURL = (link: string) => {
 
   useEffect(() => {
     fetchData(link);
-  }, [URL]);
+  }, []);
 
   return imageURL;
 };

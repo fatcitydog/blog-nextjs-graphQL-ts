@@ -1,13 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
-interface OwnPostType {
-  title: string;
-  url: string;
-  description: string;
-  createdAt: number;
-  author: string;
-}
+import { OwnPostType, handleFunction } from "./Interface";
 
 const Form = styled.form`
   display: flex;
@@ -36,8 +30,8 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export default function PostForm({ handleCardOpen }: any) {
-  const [savePost, setSavePost] = useState<OwnPostType[]>([]);
+export default function PostForm({ handleSavePost }: handleFunction) {
+  const [saveStatus, setSaveStatus] = useState(false);
   const titleRef = useRef<HTMLInputElement | null>(null);
   const urlRef = useRef<HTMLInputElement | null>(null);
   const descriptionRef = useRef<HTMLInputElement | null>(null);
@@ -52,23 +46,15 @@ export default function PostForm({ handleCardOpen }: any) {
         title: titleValue,
         url: urlValue,
         description: descriptionValue,
-        createdAt: Date.now(),
         author: "Unknown",
+        createdAt: Date.now(),
       };
-      setSavePost((prev) => [...prev, newData]);
-      handleCardOpen();
+      handleSavePost(newData);
+      setSaveStatus(true);
     } else {
       console.log("something went wrong!");
     }
   };
-
-  const handleLocalStorage = (posts: OwnPostType[]) => {
-    localStorage.setItem("post", JSON.stringify(posts));
-  };
-
-  useEffect(() => {
-    handleLocalStorage(savePost);
-  }, [savePost]);
 
   return (
     <Form onSubmit={handleFormSubmit}>
@@ -76,6 +62,7 @@ export default function PostForm({ handleCardOpen }: any) {
       <Input ref={urlRef} type="text" placeholder="URL" />
       <Input ref={descriptionRef} type="text" placeholder="Description" />
       <Button type="submit">upload</Button>
+      {saveStatus && <div>data saved!</div>}
     </Form>
   );
 }

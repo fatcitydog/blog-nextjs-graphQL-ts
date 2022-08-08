@@ -4,6 +4,7 @@ import { BsFillPatchPlusFill, BsXLg } from "react-icons/bs";
 
 import PostForm from "./PostForm";
 import Modal from "./Layout/Modal";
+import { handleFunction } from "./Interface";
 
 const Icon = styled.div`
   position: fixed;
@@ -24,7 +25,7 @@ export const LargeCloseIcon = styled(BsXLg)`
   top: 3rem;
 `;
 
-export default function AddPost({ setPosts }: any) {
+export default function AddPost({ handleSavePost }: handleFunction) {
   const [cardOpen, setCardOpen] = useState(false);
   const handleCardOpen = () => {
     setCardOpen(!cardOpen);
@@ -35,7 +36,7 @@ export default function AddPost({ setPosts }: any) {
       {cardOpen && (
         <Modal
           action={handleCardOpen}
-          context={<PostForm handleCardOpen={handleCardOpen} />}
+          context={<PostForm handleSavePost={handleSavePost} />}
         />
       )}
       {!cardOpen && (
