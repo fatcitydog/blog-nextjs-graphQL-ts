@@ -1,22 +1,15 @@
 export interface postType {
-  id: string;
+  id?: string;
   title: string;
   url: string;
   description: string;
   author: string;
   createdAt: number;
-  updatedAt: number;
-  score: number;
-  text: string;
-  type: string;
-}
-
-export interface OwnPostType {
-  title: string;
-  url: string;
-  description: string;
-  author: string;
-  createdAt: number;
+  updatedAt?: number;
+  score?: number;
+  text?: string;
+  type?: string;
+  __typename?: string;
 }
 
 export interface handleFunction {

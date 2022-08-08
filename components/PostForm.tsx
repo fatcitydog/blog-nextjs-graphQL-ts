@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 
 import { handleFunction } from "./Interface";
@@ -12,12 +12,22 @@ const Form = styled.form`
   width: 80%;
 `;
 
+const Label = styled.label`
+  max-width: 30rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex;
+`;
 const Input = styled.input`
   font-size: 18px;
   padding: 1rem;
   max-width: 30rem;
   border-radius: 3px;
   width: 100%;
+  border: none;
+  border-bottom: 1px solid silver;
   ::placeholder {
     color: silver;
   }
@@ -27,6 +37,7 @@ const Button = styled.button`
   padding: 1rem;
   max-width: 30rem;
   width: 100%;
+  border: silver;
   cursor: pointer;
 `;
 
@@ -58,9 +69,25 @@ export default function PostForm({ handleSavePost }: handleFunction) {
 
   return (
     <Form onSubmit={handleFormSubmit}>
-      <Input ref={titleRef} type="text" placeholder="Title" />
-      <Input ref={urlRef} type="text" placeholder="URL" />
-      <Input ref={descriptionRef} type="text" placeholder="Description" />
+      <Label>
+        Title: <Input ref={titleRef} type="text" placeholder="Youtuber" />
+      </Label>
+      <Label>
+        URL:{" "}
+        <Input
+          ref={urlRef}
+          type="text"
+          placeholder="https://www.youtube.com/"
+        />
+      </Label>
+      <Label>
+        Description:{" "}
+        <Input
+          ref={descriptionRef}
+          type="text"
+          placeholder="A video Platform"
+        />
+      </Label>
       <Button type="submit">upload</Button>
       {saveStatus && <div>data saved!</div>}
     </Form>

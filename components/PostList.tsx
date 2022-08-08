@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import Post from "./Post";
 import { MoreBox } from "../styles/globalStyles";
 import AddPost from "./AddPost";
-import { postType, OwnPostType } from "./Interface";
+import { postType } from "./Interface";
 import { Header } from "../styles/globalStyles";
+
 const POST_QUERY = gql`
   query {
     firstPageArticles {
@@ -40,7 +41,7 @@ const RETRIEVEPAGE_QUERY = gql`
 
 export default function PostList() {
   const [posts, setPosts] = useState<postType[]>([]);
-  const [ownPost, setOwnPost] = useState<OwnPostType[]>([]);
+  const [ownPost, setOwnPost] = useState<postType[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
   const {
     data: firstPage,
@@ -77,7 +78,7 @@ export default function PostList() {
     }
   };
 
-  const handleSavePost = (post: OwnPostType) => {
+  const handleSavePost = (post: postType) => {
     setOwnPost((prev) => [...prev, post]);
   };
 
@@ -91,7 +92,7 @@ export default function PostList() {
     window.addEventListener("scroll", handleScroll);
   }, [pageNumber]);
 
-  const handleLocalStorage = (posts: OwnPostType[]) => {
+  const handleLocalStorage = (posts: postType[]) => {
     localStorage.setItem("post", JSON.stringify(posts));
   };
 
@@ -108,12 +109,12 @@ export default function PostList() {
       <AddPost handleSavePost={handleSavePost} />
       <div>
         <Header>Your own Post</Header>
-        {ownPost ? (
-          ownPost.map((post: OwnPostType, index) => (
+        {ownPost.length > 0 ? (
+          ownPost.map((post: postType, index) => (
             <Post key={index} post={post} />
           ))
         ) : (
-          <div>no post yet, please create your own</div>
+          <div>No post yet, please create your own!</div>
         )}
       </div>
       <div>
