@@ -103,7 +103,7 @@ export default function PostList() {
 
   if (firstPageLoading) return <div>Loading...</div>;
   if (firstPageError || retrievePageError) return <div>Error!</div>;
-  console.log(ownPost);
+
   //It should be the post.id for the key but since the IDs are repeated in the data so I use index instead.
   return (
     <>
