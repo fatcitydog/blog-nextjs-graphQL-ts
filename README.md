@@ -10,13 +10,33 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This is an interview task.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+##deployment
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+you can check my demo here:
+- vecel
+[Demo](https://blog-nextjs-graphql-mauve.vercel.app/)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Tech Stack
+
+- TypeScript
+- Next.js
+- apollo-client
+- graphQL
+- Styled Components
+- axios
+
+
+## Features
+### 1.  Fetching data using GraphQL and apollo-client(useQuery function).
+### 2.  Get the metadata from server-side because of CORS issue and use custom hook to get the image url 
+### 3.  Create a scrolling function to keep fetch data from API when user scroll down to the end.
+### 4.  UI design and mobile responsive
+### 5.  Dark mode
+### 6.  implement function for user create their own posts and store it in LocalStorage.
+### 7.   Create an utils to display the date more friendly use: just post, 2 mins age...
+
 
 ## Learn More
 
