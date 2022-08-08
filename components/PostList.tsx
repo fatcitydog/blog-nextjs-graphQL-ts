@@ -40,6 +40,7 @@ const RETRIEVEPAGE_QUERY = gql`
 
 export default function PostList() {
   const [posts, setPosts] = useState<any[]>([]);
+  const [yourownPost, setYourownPost] = useState<any[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
   const {
     data: firstPage,
@@ -87,13 +88,19 @@ export default function PostList() {
     window.addEventListener("scroll", handleScroll);
   }, [pageNumber]);
 
+  useEffect(() => {
+    const localData = localStorage.getItem("post");
+    console.log(localData);
+    if (localData) {
+    }
+  }, []);
   if (firstPageLoading) return <div>Loading...</div>;
   if (firstPageError || retrievePageError) return <div>Error!</div>;
 
   //It should be the post.id for the key but since the IDs are repeated in the data so I use index instead.
   return (
     <>
-      <AddPost />
+      <AddPost setPosts={setPosts} />
       <div>
         {posts &&
           posts.map((post: any, index) => <Post key={index} post={post} />)}

@@ -24,11 +24,10 @@ export const LargeCloseIcon = styled(BsXLg)`
   top: 3rem;
 `;
 
-export default function AddPost({ setUpdateData, user }) {
+export default function AddPost({ setPosts }: any) {
   const [cardOpen, setCardOpen] = useState(false);
   const handleCardOpen = () => {
     setCardOpen(!cardOpen);
-    console.log("ttee");
   };
 
   return (
