@@ -47,6 +47,7 @@ const PostInfo = styled(Text)`
 `;
 
 export default function Post({ post }: any) {
+  
   const imageURL = useFetchURL(post.url);
 
   return (

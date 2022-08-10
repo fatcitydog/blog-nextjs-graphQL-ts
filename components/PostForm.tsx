@@ -42,16 +42,17 @@ const Button = styled.button`
 `;
 
 export default function PostForm({ handleSavePost }: handleFunction) {
-  const [saveStatus, setSaveStatus] = useState(false);
+  const [updatedPost, setUpdatedPost] = useState(false);
+  
   const titleRef = useRef<HTMLInputElement | null>(null);
   const urlRef = useRef<HTMLInputElement | null>(null);
   const descriptionRef = useRef<HTMLInputElement | null>(null);
 
   const handleFormSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const titleValue = titleRef.current?.value;
-    const urlValue = urlRef.current?.value;
-    const descriptionValue = descriptionRef.current?.value;
+    let titleValue = titleRef.current?.value;
+    let urlValue = urlRef.current?.value;
+    let descriptionValue = descriptionRef.current?.value;
     if (titleValue && urlValue && descriptionValue) {
       const newData = {
         title: titleValue,
@@ -61,7 +62,7 @@ export default function PostForm({ handleSavePost }: handleFunction) {
         createdAt: Date.now(),
       };
       handleSavePost(newData);
-      setSaveStatus(true);
+      setUpdatedPost(true);
     } else {
       console.log("something went wrong!");
     }
@@ -73,7 +74,7 @@ export default function PostForm({ handleSavePost }: handleFunction) {
         Title: <Input ref={titleRef} type="text" placeholder="Youtuber" />
       </Label>
       <Label>
-        URL:{" "}
+        URL:
         <Input
           ref={urlRef}
           type="text"
@@ -81,15 +82,18 @@ export default function PostForm({ handleSavePost }: handleFunction) {
         />
       </Label>
       <Label>
-        Description:{" "}
+        Description:
         <Input
           ref={descriptionRef}
           type="text"
           placeholder="A video Platform"
         />
       </Label>
-      <Button type="submit">upload</Button>
-      {saveStatus && <div>data saved!</div>}
+      {!updatedPost ? (
+        <Button type="submit">upload</Button>
+      ) : (
+        <div>data saved!</div>
+      )}
     </Form>
   );
 }
