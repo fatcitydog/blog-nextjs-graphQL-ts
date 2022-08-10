@@ -4,20 +4,20 @@ import axios from "axios";
 export const useFetchURL = (link: string) => {
   const [imageURL, setImageURL] = useState<string | null>();
 
-  const fetchData = async (url: string) => {
+  const fetchDatafromApi = async (url: string) => {
     const {
       data: { response, err },
-    } = await axios.post("/api/metacardvalidator", {
+    } = await axios.post("/api/metaDataValidator", {
       url: url,
     });
     if (response) {
-      getData(response);
+      getImageURL(response);
     } else {
       console.log(err);
     }
   };
 
-  const getData = (data: string) => {
+  const getImageURL = (data: string) => {
     const regexp = new RegExp("<meta.*?(|</meta)>", "g");
     let imageLink = "";
     const metaTagsList = data.match(regexp);
@@ -41,7 +41,7 @@ export const useFetchURL = (link: string) => {
   };
 
   useEffect(() => {
-    fetchData(link);
+    fetchDatafromApi(link);
   }, []);
 
   return imageURL;

@@ -26,7 +26,9 @@ export const LargeCloseIcon = styled(BsXLg)`
 `;
 
 export default function AddPost({ handleSavePost }: handleFunction) {
+
   const [cardOpen, setCardOpen] = useState(false);
+  
   const handleCardOpen = () => {
     setCardOpen(!cardOpen);
   };

@@ -41,7 +41,7 @@ const RETRIEVEPAGE_QUERY = gql`
 
 export default function PostList() {
   const [posts, setPosts] = useState<postType[]>([]);
-  const [ownPost, setOwnPost] = useState<postType[]>([]);
+  const [localPost, setLocalPost] = useState<postType[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
   const {
     data: firstPage,
@@ -79,7 +79,7 @@ export default function PostList() {
   };
 
   const handleSavePost = (post: postType) => {
-    setOwnPost((prev) => [...prev, post]);
+    setLocalPost((prev) => [...prev, post]);
   };
 
   useEffect(() => {
@@ -97,8 +97,8 @@ export default function PostList() {
   };
 
   useEffect(() => {
-    handleLocalStorage(ownPost);
-  }, [ownPost]);
+    handleLocalStorage(localPost);
+  }, [localPost]);
 
   if (firstPageLoading) return <div>Loading...</div>;
   if (firstPageError || retrievePageError) return <div>Error!</div>;
@@ -107,23 +107,23 @@ export default function PostList() {
   return (
     <>
       <AddPost handleSavePost={handleSavePost} />
-      <div>
+      <>
         <Header>Your own Post</Header>
-        {ownPost.length > 0 ? (
-          ownPost.map((post: postType, index) => (
+        {localPost.length > 0 ? (
+          localPost.map((post: postType, index) => (
             <Post key={index} post={post} />
           ))
         ) : (
           <div>No post yet, please create your own!</div>
         )}
-      </div>
-      <div>
+      </>
+      <>
         <Header>Public Post</Header>
         {posts &&
           posts.map((post: postType, index) => (
             <Post key={index} post={post} />
           ))}
-      </div>
+      </>
       {retrievePageLoading && <div>Loading...</div>}
       <MoreBox>More...</MoreBox>
     </>
